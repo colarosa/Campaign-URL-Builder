@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[THE BEST] Free UTM Link Builder Tool for Tracking Campaigns 🚀</title>
+  <meta name="description" content="Create trackable URLs effortlessly with the [THE BEST] Free UTM Link Builder Tool. Perfect for tracking campaigns, boosting marketing insights, and simplifying analytics. 🚀 Start optimizing today!">
+  <meta name="keywords" content="UTM link builder, free UTM tool, UTM generator, campaign tracking tool, marketing analytics, trackable URLs, free UTM generator, UTM parameters, campaign URL builder, digital marketing tool">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9fbff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .container {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+      width: 95%;
+      max-width: 650px;
+      margin: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+    p {
+      text-align: center;
+      color: #7f8c8d;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+      color: #34495e;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #bdc3c7;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+    .output {
+      margin-top: 15px;
+      padding: 15px;
+      border: 1px solid #dcdde1;
+      background-color: #f0f3f7;
+      border-radius: 8px;
+    }
+    .output h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      color: #34495e;
+    }
+    .output-item {
+      margin-bottom: 10px;
+    }
+    .output-text {
+      background-color: #ffffff;
+      padding: 10px;
+      border: 1px solid #dcdde1;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #34495e;
+      word-wrap: break-word;
+      margin-bottom: 5px;
+    }
+    .copy-button {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .copy-button:hover {
+      background-color: #1e8449;
+    }
+    .copy-feedback {
+      margin-top: 5px;
+      font-size: 13px;
+      color: #27ae60;
+      display: none;
+    }
+    .attribution {
+      text-align: center;
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-bottom: 20px;
+    }
+    .attribution a {
+      text-decoration: none;
+      color: #007BFF;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    .attribution a:hover {
+      color: #0056b3;
+    }
+    .attribution span {
+      color: #e74c3c;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>UTM Link Builder</h2>
+    <p>Create, preview, and copy trackable URLs for your campaigns effortlessly.</p>
+    <div class="attribution">
+      Made with <span>&#10084;</span> by 
+      <a href="https://triangledigital.xyz" target="_blank">Triangle</a>
+    </div>
+    <form id="utmForm">
+      <label for="baseURL">Base URL (Landing Page URL):</label>
+      <input type="url" id="baseURL" placeholder="example.com" required>
+
+      <label for="utmSource">UTM Source:</label>
+      <input type="text" id="utmSource" placeholder="e.g., google" required>
+
+      <label for="utmMedium">UTM Medium:</label>
+      <input type="text" id="utmMedium" placeholder="e.g., cpc" required>
+
+      <label for="utmCampaign">UTM Campaign:</label>
+      <input type="text" id="utmCampaign" placeholder="e.g., spring_sale" required>
+
+      <label for="utmContent">UTM Content (Optional):</label>
+      <input type="text" id="utmContent" placeholder="e.g., banner_ad">
+
+      <label for="utmTerm">UTM Term (Optional):</label>
+      <input type="text" id="utmTerm" placeholder="e.g., shoes">
+    </form>
+    
+    <div class="output" id="output" style="display: none;">
+      <h3>Generated Output:</h3>
+      <div class="output-item">
+        <strong>UTM URL:</strong>
+        <div class="output-text" id="previewURL"></div>
+        <button class="copy-button" onclick="copyToClipboard('previewURL')">Copy URL</button>
+        <button class="copy-button" id="testLinkButton" style="background-color: #3498db;" disabled>Test Link</button>
+        <p class="copy-feedback" id="urlFeedback">Copied to clipboard!</p>
+      </div>
+      <div class="output-item">
+        <strong>ValueTrack Parameters:</strong>
+        <div class="output-text" id="valueTrackParams"></div>
+        <button class="copy-button" onclick="copyToClipboard('valueTrackParams')">Copy Parameters</button>
+        <p class="copy-feedback" id="paramsFeedback">Copied to clipboard!</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('utmForm');
+    const outputDiv = document.getElementById('output');
+    const previewURL = document.getElementById('previewURL');
+    const valueTrackParams = document.getElementById('valueTrackParams');
+    const urlFeedback = document.getElementById('urlFeedback');
+    const paramsFeedback = document.getElementById('paramsFeedback');
+    const testLinkButton = document.getElementById('testLinkButton');
+
+    const ensureValidBaseURL = (url) => {
+      if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        return `https://www.${url}`;
+      }
+      return url;
+    };
+
+    const updateOutput = () => {
+      let baseURL = document.getElementById('baseURL').value.trim();
+      const utmSource = document.getElementById('utmSource').value.trim();
+      const utmMedium = document.getElementById('utmMedium').value.trim();
+      const utmCampaign = document.getElementById('utmCampaign').value.trim();
+      const utmContent = document.getElementById('utmContent').value.trim();
+      const utmTerm = document.getElementById('utmTerm').value.trim();
+
+      if (baseURL) {
+        baseURL = ensureValidBaseURL(baseURL);
+        const url = new URL(baseURL);
+        if (utmSource) url.searchParams.set('utm_source', '{network}');
+        if (utmMedium) url.searchParams.set('utm_medium', utmMedium);
+        if (utmCampaign) url.searchParams.set('utm_campaign', utmCampaign);
+        if (utmContent) url.searchParams.set('utm_content', utmContent);
+        if (utmTerm) url.searchParams.set('utm_term', utmTerm);
+
+        previewURL.textContent = url.toString();
+        testLinkButton.disabled = false;
+        testLinkButton.onclick = () => {
+          window.open(url.toString(), '_blank');
+        };
+
+        const params = `utm_source={network}&utm_medium=${utmMedium || 'cpc'}&utm_campaign=${utmCampaign || '{campaignid}'}&utm_term=${utmTerm || '{keyword}'}&utm_content=${utmContent || '{adcontent}'}`;
+        valueTrackParams.textContent = params;
+
+        outputDiv.style.display = 'block';
+        urlFeedback.style.display = 'none';
+        paramsFeedback.style.display = 'none';
+      } else {
+        outputDiv.style.display = 'none';
+        testLinkButton.disabled = true;
+      }
+    };
+
+    const copyToClipboard = (elementId) => {
+      const textToCopy = document.getElementById(elementId).textContent;
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        const feedback = elementId === 'previewURL' ? urlFeedback : paramsFeedback;
+        feedback.style.display = 'block';
+        setTimeout(() => {
+          feedback.style.display = 'none';
+        }, 3000);
+      });
+    };
+
+    form.addEventListener('input', updateOutput);
+  </script>
+</body>
+</html>
